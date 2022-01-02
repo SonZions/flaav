@@ -20,7 +20,6 @@ RUN apt-get update && apt-get install -y python3-pip \
 
 RUN python3 -m pip install -r requirements.txt 
 
-COPY CalDav-Urlaub.py .
+COPY app.py .
 
-CMD ["python3", "CalDav-Urlaub.py"]
- 
+CMD ["python3", "app.py"]

@@ -53,6 +53,7 @@ while 1==1:
     start=datetime(2021, 12, 26),
     end=datetime(2021, 12, 26), expand=True)
    
+    print(events_fetched)
     for x in range(len(events_fetched)):
         summary_value = events_fetched[x].vobject_instance.vevent.summary.value
         print (summary_value)
