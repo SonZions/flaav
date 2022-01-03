@@ -15,7 +15,7 @@ Zur Zeit kann die API nur mit ganztägigen Events umgehen. Andere Termin und Ser
 ## build 
 
 ```
-docker build -t dudanski/flaav:latest .
+docker build -t flaav:latest .
 ```
 
 Der Build datuert auf meinem Raspberry relativ ewig. Wäre ein guter Plan das Image bei Bedarf in ein Repo zu laden.
@@ -43,7 +43,7 @@ docker run --env-file .env \
            --name flaav \
            --detach \
            --publish 5000:5000 \ 
-          dudanski/flaav:latest
+          flaav:latest
 ```
 
 ### Oder environment -Parameter
@@ -57,7 +57,7 @@ docker run --env-file .env \
            --env caldav_username=<<your User Name/AppleID>>
            --env caldav_passwd=<<your application Password>>
            --env look_ahead_days=<<30>>
-          dudanski/flaav:latest
+          flaav:latest
 ```
 
 ## Konfiguration
