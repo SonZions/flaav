@@ -4,7 +4,6 @@ from datetime import datetime, timedelta
 from dotenv import load_dotenv
 import caldav, re, os
 
-
 app = Flask(__name__)
 
 
@@ -46,7 +45,7 @@ def is_match(search_string, string):
     return False
     
 
-@app.route('/flaav/api/v1.0/<string:calender_name>/events', methods=['GET'])
+@app.route('/flaav/api/v0.1/<string:calender_name>/events', methods=['GET'])
 def get_events(calender_name):
     rt = ''
     for event in get_caldat(calender_name):
@@ -54,7 +53,7 @@ def get_events(calender_name):
     return rt
 
 
-@app.route('/flaav/api/v1.0/<string:calender_name>/events/any/<string:summary>', methods=['GET'])
+@app.route('/flaav/api/v0.1/<string:calender_name>/events/any/<string:summary>', methods=['GET'])
 def get_event(calender_name, summary):
     rt = ''
     for event in get_caldat(calender_name):
@@ -67,7 +66,7 @@ def get_event(calender_name, summary):
     return rt
 
 
-@app.route('/flaav/api/v1.0/<string:calender_name>/events/any/<string:summary>/<string:component>', methods=['GET'])
+@app.route('/flaav/api/v0.1/<string:calender_name>/events/any/<string:summary>/<string:component>', methods=['GET'])
 def get_component(calender_name, summary, component):
     rt = ''
     for event in get_caldat(calender_name):
@@ -79,7 +78,7 @@ def get_component(calender_name, summary, component):
         return '404 Not Found'
     return rt
 
-@app.route('/flaav/api/v1.0/<string:calender_name>/events/next/<string:summary>/<string:component>', methods=['GET'])
+@app.route('/flaav/api/v0.1/<string:calender_name>/events/next/<string:summary>/<string:component>', methods=['GET'])
 def get_component_from_next_event(calender_name, summary, component):
     rt = ''
     dt_min = datetime.today().date() + timedelta(days=look_ahead_days)
@@ -93,7 +92,7 @@ def get_component_from_next_event(calender_name, summary, component):
     return rt
 
 
-@app.route('/flaav/api/v1.0/<string:calender_name>/events/any/<string:summary>/is_today', methods=['GET'])
+@app.route('/flaav/api/v0.1/<string:calender_name>/events/any/<string:summary>/is_today', methods=['GET'])
 def get_event_is_today(calender_name, summary):
     rt = '0'
     for event in get_caldat_today(calender_name):
@@ -119,4 +118,4 @@ if __name__ == '__main__':
     # get all Calenders
     calendars = my_principal.calendars()
 
-    app.run(debug=True,  host='0.0.0.0')
+    app.run(debug=False,  host='0.0.0.0')
