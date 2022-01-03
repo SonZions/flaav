@@ -90,8 +90,7 @@ $ curl http://myserver.com:5000/flaav/api/v0.1
 
 ### Events
 
-Die ist auch der nächste zu wählende Knotenpunkt. Der Knoten nach Auswahl des Kalenders zeigt alle verfügbaren Events im CalDav-Format. Das ist relativ unübersichtlich. Hilft aber beim Debuggen.
-
+Diese sind nun auch der nächste zu wählende Knotenpunkt. Der Knoten nach Auswahl des Kalenders zeigt alle verfügbaren Events im CalDav-Format. Das ist relativ unübersichtlich. Hilft aber beim Debuggen.
 Theoretisch könnten verschiedene Objekte in einem Kalender stecken (Events, Tasks ... ). Bisher gibts nur Events:
 
 ```
@@ -147,8 +146,9 @@ $ curl http://myserver.com:5000/flaav/api/v0.1/Family/events
 
 ### Verfügbare Events mit Namen
 
-Der Nächste Knoten, nach dem Events gewählt werden können ist der Name. Dieser kann mittels Regex ermittelt werden.
-Notwendig ist zu wählen ob jedes event, oder nur das nächste anstehende Event mit dem Namen zurückgegeben werden soll (any/next)
+Der Nächste Knoten, nach dem Events gefiltert werden können, ist der Name. Dieser kann mittels Regex ermittelt werden.
+Notwendig ist zu wählen ob jedes event, nur das nächste anstehende, oder nur ein heutiges Event mit dem gegebenen Namen zurückgegeben werden soll 
+(any/next/today)
 
 #### any: 
 ```
@@ -201,7 +201,7 @@ $ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/any/Kita.*"
 
 #### next:
 
-auf dem gleichen Knoten aber mit "next" in er route gibt das Event zurück, dass als nächstes stattfindet
+auf dem gleichen Knoten aber mit "next" in er Route gibt das Event zurück, dass als nächstes stattfindet
 
 ```
 $ curl "http://myserver.com:5000/flaav/api/v0.1/<calendar name>/events/next/<event name>"
