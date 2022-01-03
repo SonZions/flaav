@@ -80,7 +80,7 @@ Die API fragt bei jedem Call den Kalender ab. Aus Perormance-Sicht kann es sinnv
 
 als Root zeit die API alle verfügbaren Kalender an
 
-´´´
+```
 $ curl http://myserver.com:5000/flaav/api/v0.1
 
 > Reminders ⚠️
@@ -91,7 +91,7 @@ $ curl http://myserver.com:5000/flaav/api/v0.1
 > Einkauf
 > Wochenmarkt
 > Baumarkt
-´´´
+```
 
 ### Events
 
@@ -99,13 +99,13 @@ Die ist auch der nächste zu wählende Knotenpunkt. Der Knoten nach Auswahl des 
 
 Theoretisch könnten verschiedene Objekte in einem Kalender stecken (Events, Tasks ... ). Bisher gibts nur Events:
 
-´´´
+```
 $ curl http://myserver.com:5000/flaav/api/v0.1/<calenda name>/events
-´´´
+```
 
 *Beipsiel:*
 
-´´´
+```
 $ curl http://myserver.com:5000/flaav/api/v0.1/Family/events
 
 > BEGIN:VCALENDAR
@@ -148,7 +148,7 @@ $ curl http://myserver.com:5000/flaav/api/v0.1/Family/events
 > END:VCALENDAR
 > ...
 ...
-´´´
+```
 
 ### Verfügbare Events mit Namen
 
@@ -156,13 +156,13 @@ Der Nächste Knoten, nach dem Events gewählt werden können ist der Name. Diese
 Notwendig ist zu wählen ob jedes event, oder nur das nächste anstehende Event mit dem Namen zurückgegeben werden soll (any/next)
 
 #### any: 
-´´´
+```
 $ curl "http://myserver.com:5000/flaav/api/v0.1/<calenda name>/events/any/<event name>"
-´´´
+```
 
 
 *Beispiel 1:*
-´´´
+```
 $ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/any/Kita%20frei"
 
 > BEGIN:VCALENDAR
@@ -180,11 +180,11 @@ $ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/any/Kita%20frei"
 > URL;VALUE=URI:
 > END:VEVENT
 > END:VCALENDAR
-´´´
+```
 
 *Beispiel 2:*
 Dieses mal mit Regex
-´´´
+```
 $ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/any/Kita.*"
 
 > BEGIN:VCALENDAR
@@ -202,19 +202,19 @@ $ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/any/Kita.*"
 > URL;VALUE=URI:
 > END:VEVENT
 > END:VCALENDAR
-´´´
+```
 
 #### next:
 
 auf dem gleichen Knoten aber mit "next" in er route gibt das Event zurück, dass als nächstes stattfindet
 
-´´´
+```
 $ curl "http://myserver.com:5000/flaav/api/v0.1/<calenda name>/events/next/<event name>"
-´´´
+```
 
 *Beispiel:*
 nächstes Event  (Uraub findet aktuell statt deswegen:)
-´´´ 
+``` 
 $ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/next/.*"
 
 > BEGIN:VCALENDAR
@@ -241,7 +241,7 @@ $ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/next/.*"
 > END:VALARM
 > END:VEVENT
 > END:VCALENDAR
-´´´
+```
 
 
 
@@ -249,13 +249,13 @@ $ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/next/.*"
 
 nur weils geht ... gibts den gleichen Knoten auch noch mit today. Dieser zeigt nur events von heute an.
 
-´´´
+```
 $ curl "http://myserver.com:5000/flaav/api/v0.1/<calenda name>/events/today/<event name>"
-´´´
+```
 
 *Beispiel:*
 Events, die heute stattfinden. Egal mit welchem Namen (regex = .*)
-´´´
+```
 $ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/today/.*"
 
 > BEGIN:VCALENDAR
@@ -298,49 +298,49 @@ $ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/today/.*"
 > URL;VALUE=URI:
 > END:VEVENT
 > END:VCALENDAR                 
-´´´
+```
 
 ### is_today
 
 liefert einen einfach eine 1 bzw. eine 0 je nach dem ob das Event heute stattfinden oder nicht. Diese Funktion ist nur auf dem any-Knoten verfügbar
 
-´´´
+```
 $ curl "http://myserver.com:5000/flaav/api/v0.1/<calenda name>/events/any/<event name>/is_today"
-´´´
+```
 
 *Beispiel:*
 Angenommen es ist heute Urlaub ;) 
 
-´´´
+```
 $ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/any/Urlaub/is_today"
 
 > 1
-´´´
+```
 
 ### Eventeigenschaften 
 
 der Wert jeder Eigenschaft/Component/Subcomponent kann auch einzeln ausgegeben werden. Der Knoten beschreibt sich über die verfügbaren Eigenschaften. Leider haben nicht alle Events immer alle Eigenschaften gesetzt. Am Besten sucht man sich die aus der Anzeige des ganzen Events raus
 
-´´´
+```
 $ curl "http://myserver.com:5000/flaav/api/v0.1/<calenda name>/events/any/<event name>/<component name>"
-´´´
+```
 
 *Beispiel 1:*
 Nächtser starttermin fürs Papier(-müll)
-´´´
+```
 $ curl "http://myserver.com:5000/flaav/api/v0.1/M%C3%BCllabfuhr%20ROW/events/next/Papier/dtstart"
 
 > 20220111
-´´´
+```
 
 *Beispiel 2:*
 Welche Termine (Namen) stehen heute an?
-´´´
+```
 $ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/today/.*/summary"
 
 > Urlaub
 > Kita frei
-´´´
+```
 
 
 ## known issues
