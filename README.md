@@ -4,7 +4,7 @@ Flask- Applikation im Docker-Container um Kalender-Informationen aus CalDav via 
 Zwei Use-Cases schwebten mir dabei im Kopf
 
 1. Wann ist der nächste Termin (Bsp: Abholtermin Müllabfuhr)
-2. Ist heute ein Bestimmter Termin (Bsp: für einen bestimmten Betriebsmodus bei Urlaib)
+2. Ist heute ein Bestimmter Termin (Bsp: für einen bestimmten Betriebsmodus bei Urlaub)
 
 Der Fantasie sind nun aber keine Grenzen gesetzt. 
 
@@ -23,9 +23,9 @@ Der Build datuert auf meinem Raspberry relativ ewig. Wäre ein guter Plan das Im
 
 ## run
 
-## Vorbereitung 
+### Vorbereitung
 
-Anwendungspezifisches Passwort erstellen:
+**Anwendungspezifisches Passwort erstellen:**
 https://support.apple.com/de-de/HT204397
 
 
@@ -62,17 +62,12 @@ docker run --env-file .env \
 
 ## Konfiguration
 
-* caldav_url
-Url zum CalDav-Server (incl. Port) in meinem Fall https://caldav.icloud.com:443
-
-* caldav_username
-User-Name zur Authentifizierung am CalDav-Server in meinem Fall die Apple Id
-
-* caldav_passwd
-Passwort zum user-name für iCloud ein Anwenungdspezifisches Passwort
-
-* look_ahead_days
-Die API fragt bei jedem Call den Kalender ab. Aus Perormance-Sicht kann es sinnvol sein hier nur den notwendigen Zeitraum zu wählen.
+| Parameter Name  | Beschreibung |
+| ------------- | ------------- |
+| caldav_url   | Url zum CalDav-Server (incl. Port) in meinem Fall https://caldav.icloud.com:443  |
+| caldav_username | User-Name zur Authentifizierung am CalDav-Server in meinem Fall die Apple Id  |
+| caldav_passwd | Passwort zum user-name für iCloud ein anwenungdspezifisches Passwort |
+| look_ahead_days |Die API fragt bei jedem Call den Kalender ab. Aus Performance-Sicht kann es sinnvoll sein hier nur den notwendigen Zeitraum zu wählen.|
 
 # API Dokumentation
 
@@ -326,7 +321,7 @@ $ curl "http://myserver.com:5000/flaav/api/v0.1/<calenda name>/events/any/<event
 ```
 
 *Beispiel 1:*
-Nächtser starttermin fürs Papier(-müll)
+Nächster Starttermin für Papier(-müll)
 ```
 $ curl "http://myserver.com:5000/flaav/api/v0.1/M%C3%BCllabfuhr%20ROW/events/next/Papier/dtstart"
 
