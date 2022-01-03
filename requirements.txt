@@ -1,3 +1,4 @@
 caldav
 python-dotenv
 Flask
+icalendar
