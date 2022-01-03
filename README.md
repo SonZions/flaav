@@ -38,7 +38,7 @@ caldav_passwd=<<your app specific password>>
 look_ahead_days=<<30>>
 ```
 
-```bash
+```
 docker run --env-file .env \
            --name flaav \
            --detach \
@@ -48,7 +48,7 @@ docker run --env-file .env \
 
 ### Oder environment -Parameter
 
-```bash
+```
 docker run --env-file .env \
            --name flaav \
            --detach \
@@ -80,8 +80,8 @@ Die API fragt bei jedem Call den Kalender ab. Aus Perormance-Sicht kann es sinnv
 
 als Root zeit die API alle verfügbaren Kalender an
 
-´´´bash
-$ curl http://loxberry:5000/flaav/api/v0.1
+´´´
+$ curl http://myserver.com:5000/flaav/api/v0.1
 
 > Reminders ⚠️
 > Müllabfuhr ROW
@@ -99,14 +99,14 @@ Die ist auch der nächste zu wählende Knotenpunkt. Der Knoten nach Auswahl des 
 
 Theoretisch könnten verschiedene Objekte in einem Kalender stecken (Events, Tasks ... ). Bisher gibts nur Events:
 
-´´´bash
-$ curl http://loxberry:5000/flaav/api/v0.1/<calenda name>/events
+´´´
+$ curl http://myserver.com:5000/flaav/api/v0.1/<calenda name>/events
 ´´´
 
 *Beipsiel:*
 
-´´´bash
-$ curl http://loxberry:5000/flaav/api/v0.1/Family/events
+´´´
+$ curl http://myserver.com:5000/flaav/api/v0.1/Family/events
 
 > BEGIN:VCALENDAR
 > END:VCALENDAR
@@ -156,14 +156,14 @@ Der Nächste Knoten, nach dem Events gewählt werden können ist der Name. Diese
 Notwendig ist zu wählen ob jedes event, oder nur das nächste anstehende Event mit dem Namen zurückgegeben werden soll (any/next)
 
 #### any: 
-´´´bash
-$ curl "http://loxberry:1504/flaav/api/v0.1/<calenda name>/events/any/<event name>"
+´´´
+$ curl "http://myserver.com:5000/flaav/api/v0.1/<calenda name>/events/any/<event name>"
 ´´´
 
 
 *Beispiel 1:*
-´´´bash
-$ curl "http://loxberry:1504/flaav/api/v0.1/Family/events/any/Kita%20frei"
+´´´
+$ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/any/Kita%20frei"
 
 > BEGIN:VCALENDAR
 > VERSION:2.0
@@ -184,8 +184,8 @@ $ curl "http://loxberry:1504/flaav/api/v0.1/Family/events/any/Kita%20frei"
 
 *Beispiel 2:*
 Dieses mal mit Regex
-´´´bash
-$ curl "http://loxberry:1504/flaav/api/v0.1/Family/events/any/Kita.*"
+´´´
+$ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/any/Kita.*"
 
 > BEGIN:VCALENDAR
 > VERSION:2.0
@@ -208,14 +208,14 @@ $ curl "http://loxberry:1504/flaav/api/v0.1/Family/events/any/Kita.*"
 
 auf dem gleichen Knoten aber mit "next" in er route gibt das Event zurück, dass als nächstes stattfindet
 
-´´´bash
-$ curl "http://loxberry:1504/flaav/api/v0.1/<calenda name>/events/next/<event name>"
+´´´
+$ curl "http://myserver.com:5000/flaav/api/v0.1/<calenda name>/events/next/<event name>"
 ´´´
 
 *Beispiel:*
 nächstes Event  (Uraub findet aktuell statt deswegen:)
-´´´bash 
-$ curl "http://localhost:5000/flaav/api/v0.1/Family/events/next/.*"
+´´´ 
+$ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/next/.*"
 
 > BEGIN:VCALENDAR
 > VERSION:2.0
@@ -249,14 +249,14 @@ $ curl "http://localhost:5000/flaav/api/v0.1/Family/events/next/.*"
 
 nur weils geht ... gibts den gleichen Knoten auch noch mit today. Dieser zeigt nur events von heute an.
 
-´´´bash
-$ curl "http://loxberry:1504/flaav/api/v0.1/<calenda name>/events/today/<event name>"
+´´´
+$ curl "http://myserver.com:5000/flaav/api/v0.1/<calenda name>/events/today/<event name>"
 ´´´
 
 *Beispiel:*
 Events, die heute stattfinden. Egal mit welchem Namen (regex = .*)
-´´´bash
-$ curl "http://localhost:5000/flaav/api/v0.1/Family/events/today/.*"
+´´´
+$ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/today/.*"
 
 > BEGIN:VCALENDAR
 > VERSION:2.0
@@ -304,15 +304,15 @@ $ curl "http://localhost:5000/flaav/api/v0.1/Family/events/today/.*"
 
 liefert einen einfach eine 1 bzw. eine 0 je nach dem ob das Event heute stattfinden oder nicht. Diese Funktion ist nur auf dem any-Knoten verfügbar
 
-´´´bash
-$ curl "http://loxberry:1504/flaav/api/v0.1/<calenda name>/events/any/<event name>/is_today"
+´´´
+$ curl "http://myserver.com:5000/flaav/api/v0.1/<calenda name>/events/any/<event name>/is_today"
 ´´´
 
 *Beispiel:*
 Angenommen es ist heute Urlaub ;) 
 
-´´´bash
-$ curl "http://loxberry:1504/flaav/api/v0.1/Family/events/any/Urlaub/is_today"
+´´´
+$ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/any/Urlaub/is_today"
 
 > 1
 ´´´
@@ -321,22 +321,22 @@ $ curl "http://loxberry:1504/flaav/api/v0.1/Family/events/any/Urlaub/is_today"
 
 der Wert jeder Eigenschaft/Component/Subcomponent kann auch einzeln ausgegeben werden. Der Knoten beschreibt sich über die verfügbaren Eigenschaften. Leider haben nicht alle Events immer alle Eigenschaften gesetzt. Am Besten sucht man sich die aus der Anzeige des ganzen Events raus
 
-´´´bash
-$ curl "http://loxberry:1504/flaav/api/v0.1/<calenda name>/events/any/<event name>/<component name>"
+´´´
+$ curl "http://myserver.com:5000/flaav/api/v0.1/<calenda name>/events/any/<event name>/<component name>"
 ´´´
 
 *Beispiel 1:*
 Nächtser starttermin fürs Papier(-müll)
-´´´bash
-$ curl "http://localhost:5000/flaav/api/v0.1/M%C3%BCllabfuhr%20ROW/events/next/Papier/dtstart"
+´´´
+$ curl "http://myserver.com:5000/flaav/api/v0.1/M%C3%BCllabfuhr%20ROW/events/next/Papier/dtstart"
 
 > 20220111
 ´´´
 
 *Beispiel 2:*
 Welche Termine (Namen) stehen heute an?
-´´´bash
-$ curl "http://localhost:5000/flaav/api/v0.1/Family/events/today/.*/summary"
+´´´
+$ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/today/.*/summary"
 
 > Urlaub
 > Kita frei
