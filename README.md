@@ -14,7 +14,7 @@ Zur Zeit kann die API nur mit ganztägigen Events umgehen. Andere Termin und Ser
 
 ## build 
 
-```bash
+```
 docker build -t dudanski/flaav:latest .
 ```
 
