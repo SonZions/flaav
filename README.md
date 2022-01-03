@@ -354,6 +354,8 @@ $ curl "http://myserver.com:5000/flaav/api/v0.1/<calendar name>/events/any/<even
 Wochentag an dem Papier(-Müll) das nächste mal abgeholt wird
 ```
 $ curl http://myserver.com:5000/flaav/api/v0.1/Müllabfuhr%20ROW/events/next/Papier/weekday
+
+> 1
 ```
 
 
@@ -370,6 +372,8 @@ $ curl "http://myserver.com:5000/flaav/api/v0.1/<calendar name>/events/any/<even
 Anzahl Tage bis das nächste Mal Papier(-Müll) abgeholt wird
 ```
 http://localhost:5000/flaav/api/v0.1/Müllabfuhr%20ROW/events/next/Papier/days_until
+
+> 8
 ```
 
 
