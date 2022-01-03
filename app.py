@@ -119,4 +119,4 @@ if __name__ == '__main__':
     # get all Calenders
     calendars = my_principal.calendars()
 
-    app.run(debug=True, port=api_port)
+    app.run(debug=True,  host='0.0.0.0')
