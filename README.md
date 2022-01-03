@@ -295,22 +295,6 @@ $ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/today/.*"
 > END:VCALENDAR                 
 ```
 
-### is_today
-
-liefert einen einfach eine 1 bzw. eine 0 je nach dem ob das Event heute stattfinden oder nicht. Diese Funktion ist nur auf dem any-Knoten verfügbar
-
-```
-$ curl "http://myserver.com:5000/flaav/api/v0.1/<calendar name>/events/any/<event name>/is_today"
-```
-
-*Beispiel:*
-Angenommen es ist heute Urlaub ;) 
-
-```
-$ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/any/Urlaub/is_today"
-
-> 1
-```
 
 ### Eventeigenschaften 
 
@@ -335,6 +319,57 @@ $ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/today/.*/summary"
 
 > Urlaub
 > Kita frei
+```
+
+## Weitere Funktionen
+
+### is_today
+
+liefert einen einfach eine 1 bzw. eine 0 je nach dem ob das Event heute stattfinden oder nicht. 
+Diese Funktion ist nur auf dem **any**-Knoten verfügbar
+
+```
+$ curl "http://myserver.com:5000/flaav/api/v0.1/<calendar name>/events/any/<event name>/is_today"
+```
+
+*Beispiel:*
+Angenommen es ist heute Urlaub ;) 
+
+```
+$ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/any/Urlaub/is_today"
+
+> 1
+```
+
+### weekday
+
+liefert den Wochentag des Startdatum des Events wobei Montag = 0 und Sonntag = 6.
+Diese Funktion ist nur auf dem **next**-Knoten verfügbar
+
+```
+$ curl "http://myserver.com:5000/flaav/api/v0.1/<calendar name>/events/any/<event name>/weekday"
+```
+
+*Beispiel:*
+Wochentag an dem Papier(-Müll) das nächste mal abgeholt wird
+```
+$ curl http://myserver.com:5000/flaav/api/v0.1/Müllabfuhr%20ROW/events/next/Papier/weekday
+```
+
+
+### days_until
+
+liefert die Tage bis zum Eintritt des Events
+Diese Funktion ist nur auf dem **next**-Knoten verfügbar
+
+```
+$ curl "http://myserver.com:5000/flaav/api/v0.1/<calendar name>/events/any/<event name>/days_until"
+```
+
+*Beispiel:*
+Anzahl Tage bis das nächste Mal Papier(-Müll) abgeholt wird
+```
+http://localhost:5000/flaav/api/v0.1/Müllabfuhr%20ROW/events/next/Papier/days_until
 ```
 
 

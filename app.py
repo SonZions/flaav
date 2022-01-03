@@ -134,6 +134,35 @@ def get_component_from_next_event(calender_name, summary, component):
         return '404 Not Found'
     return rt
 
+@app.route('/flaav/api/v0.1/<string:calender_name>/events/next/<string:summary>/days_until', methods=['GET'])
+def get_hours_until(calender_name, summary):
+    # get component-value from given comonent of the next upcomming event with given name/summary
+    rt = ''
+    dt_min = datetime.today().date() + timedelta(days=look_ahead_days)
+    for event in get_caldat(calender_name):
+        if is_match(summary,event.vobject_instance.vevent.summary.value):
+            if event.icalendar_instance.subcomponents[0]['dtstart'].dt <= dt_min:
+                dt_min = event.icalendar_instance.subcomponents[0]['dtstart'].dt
+                rt = 'Found'
+    if rt == '':
+        return '404 Not Found'
+    tdelta = dt_min-datetime.today().date()
+    return str(tdelta.days)
+
+@app.route('/flaav/api/v0.1/<string:calender_name>/events/next/<string:summary>/weekday', methods=['GET'])
+def get_weekday(calender_name, summary):
+    # get component-value from given comonent of the next upcomming event with given name/summary
+    rt = ''
+    dt_min = datetime.today().date() + timedelta(days=look_ahead_days)
+    for event in get_caldat(calender_name):
+        if is_match(summary,event.vobject_instance.vevent.summary.value):
+            if event.icalendar_instance.subcomponents[0]['dtstart'].dt <= dt_min:
+                dt_min = event.icalendar_instance.subcomponents[0]['dtstart'].dt
+                rt = 'Found'
+    if rt == '':
+        return '404 Not Found'
+    return str(dt_min.weekday())
+
 @app.route('/flaav/api/v0.1/<string:calender_name>/events/today/<string:summary>/<string:component>', methods=['GET'])
 def get_component_from_today(calender_name, summary, component):
     # List component value from given component of todays occurance of given event
