@@ -95,7 +95,7 @@ Die ist auch der nächste zu wählende Knotenpunkt. Der Knoten nach Auswahl des 
 Theoretisch könnten verschiedene Objekte in einem Kalender stecken (Events, Tasks ... ). Bisher gibts nur Events:
 
 ```
-$ curl http://myserver.com:5000/flaav/api/v0.1/<calenda name>/events
+$ curl http://myserver.com:5000/flaav/api/v0.1/<calendar name>/events
 ```
 
 *Beipsiel:*
@@ -152,7 +152,7 @@ Notwendig ist zu wählen ob jedes event, oder nur das nächste anstehende Event 
 
 #### any: 
 ```
-$ curl "http://myserver.com:5000/flaav/api/v0.1/<calenda name>/events/any/<event name>"
+$ curl "http://myserver.com:5000/flaav/api/v0.1/<calendar name>/events/any/<event name>"
 ```
 
 
@@ -204,7 +204,7 @@ $ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/any/Kita.*"
 auf dem gleichen Knoten aber mit "next" in er route gibt das Event zurück, dass als nächstes stattfindet
 
 ```
-$ curl "http://myserver.com:5000/flaav/api/v0.1/<calenda name>/events/next/<event name>"
+$ curl "http://myserver.com:5000/flaav/api/v0.1/<calendar name>/events/next/<event name>"
 ```
 
 *Beispiel:*
@@ -245,7 +245,7 @@ $ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/next/.*"
 nur weils geht ... gibts den gleichen Knoten auch noch mit today. Dieser zeigt nur events von heute an.
 
 ```
-$ curl "http://myserver.com:5000/flaav/api/v0.1/<calenda name>/events/today/<event name>"
+$ curl "http://myserver.com:5000/flaav/api/v0.1/<calendar name>/events/today/<event name>"
 ```
 
 *Beispiel:*
@@ -300,7 +300,7 @@ $ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/today/.*"
 liefert einen einfach eine 1 bzw. eine 0 je nach dem ob das Event heute stattfinden oder nicht. Diese Funktion ist nur auf dem any-Knoten verfügbar
 
 ```
-$ curl "http://myserver.com:5000/flaav/api/v0.1/<calenda name>/events/any/<event name>/is_today"
+$ curl "http://myserver.com:5000/flaav/api/v0.1/<calendar name>/events/any/<event name>/is_today"
 ```
 
 *Beispiel:*
@@ -317,7 +317,7 @@ $ curl "http://myserver.com:5000/flaav/api/v0.1/Family/events/any/Urlaub/is_toda
 der Wert jeder Eigenschaft/Component/Subcomponent kann auch einzeln ausgegeben werden. Der Knoten beschreibt sich über die verfügbaren Eigenschaften. Leider haben nicht alle Events immer alle Eigenschaften gesetzt. Am Besten sucht man sich die aus der Anzeige des ganzen Events raus
 
 ```
-$ curl "http://myserver.com:5000/flaav/api/v0.1/<calenda name>/events/any/<event name>/<component name>"
+$ curl "http://myserver.com:5000/flaav/api/v0.1/<calendar name>/events/any/<event name>/<component name>"
 ```
 
 *Beispiel 1:*
