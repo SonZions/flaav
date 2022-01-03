@@ -76,6 +76,37 @@ def get_event(calender_name, summary):
     return rt
 
 
+@app.route('/flaav/api/v0.1/<string:calender_name>/events/today/<string:summary>', methods=['GET'])
+def get_event_from_today(calender_name, summary):
+    # list every occourance of the event with the given name/summary
+    rt = ''
+    for event in get_caldat_today(calender_name):
+        if is_match(summary,event.vobject_instance.vevent.summary.value):
+            if rt != '':
+                rt +=  '\r\n'
+            rt += event.data
+    if rt == '':
+        return '404 Not Found'
+    return rt
+
+@app.route('/flaav/api/v0.1/<string:calender_name>/events/next/<string:summary>', methods=['GET'])
+def get_next_event(calender_name, summary):
+    # get component-value from given comonent of the next upcomming event with given name/summary
+    rt = ''
+    dt_min = datetime.today().date() + timedelta(days=look_ahead_days)
+    for event in get_caldat(calender_name):
+        if is_match(summary,event.vobject_instance.vevent.summary.value):
+            try:
+                if event.icalendar_instance.subcomponents[0]['dtstart'].dt <= dt_min:
+                    dt_min = event.vobject_instance.vevent.dtstart
+                    rt = event.data
+            except:
+                pass
+    if rt == '':
+        return '404 Not Found'
+    return rt
+
+
 @app.route('/flaav/api/v0.1/<string:calender_name>/events/any/<string:summary>/<string:component>', methods=['GET'])
 def get_component(calender_name, summary, component):
     # List component value from given component of every occurance of given event
@@ -105,7 +136,7 @@ def get_component_from_next_event(calender_name, summary, component):
 
 @app.route('/flaav/api/v0.1/<string:calender_name>/events/today/<string:summary>/<string:component>', methods=['GET'])
 def get_component_from_today(calender_name, summary, component):
-    # List component value from given component of every occurance of given event
+    # List component value from given component of todays occurance of given event
     rt = ''
     for event in get_caldat_today(calender_name):
         if is_match(summary,event.vobject_instance.vevent.summary.value):

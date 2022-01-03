@@ -1,7 +1,16 @@
 # flaav
 
-Flask- Applikation im Docker-Container um kalender-Informationen aus CalDav via API zur Verfügung zu stellen.
+Flask- Applikation im Docker-Container um Kalender-Informationen aus CalDav via API zur Verfügung zu stellen.
+Zwei Use-Cases schwebten mir dabei im Kopf
+
+1. Wann ist der nächste Termin (Bsp: Abholtermin Müllabfuhr)
+2. Ist heute ein Bestimmter Termin (Bsp: für einen bestimmten Betriebsmodus bei Urlaib)
+
+Der Fantasie sind nun aber keine Grenzen gesetzt. 
+
 Ich hab das nur für den iCloud-Kalender getestet. Theoretisch sollten auch andere CalDav-Server funktionieren.
+
+Zur Zeit kann die API nur mit ganztägigen Events umgehen. Andere Termin und Serientermine haben eine andere Struktur in der Angabe der start- und end-dates. Das müsste man mal handeln.
 
 ## build 
 
@@ -203,14 +212,92 @@ auf dem gleichen Knoten aber mit "next" in er route gibt das Event zurück, dass
 $ curl "http://loxberry:1504/flaav/api/v0.1/<calenda name>/events/next/<event name>"
 ´´´
 
-Beispiele wie bei "any"
+*Beispiel:*
+nächstes Event  (Uraub findet aktuell statt deswegen:)
+´´´bash 
+$ curl "http://localhost:5000/flaav/api/v0.1/Family/events/next/.*"
+
+> BEGIN:VCALENDAR
+> VERSION:2.0
+> PRODID:-//PYVOBJECT//NONSGML Version 1//EN
+> BEGIN:VEVENT
+> UID:B888496E-FC4F-4D88-B4B4-79C8AA0328DB
+> DTSTART;VALUE=DATE:20211224
+> DTEND;VALUE=DATE:20220103
+> CREATED:20211225T211840Z
+> DTSTAMP:20211225T211841Z
+> LAST-MODIFIED:20211225T211840Z
+> SEQUENCE:0
+> SUMMARY:Urlaub
+> TRANSP:OPAQUE
+> URL;VALUE=URI:
+> BEGIN:VALARM
+> ACTION:DISPLAY
+> DESCRIPTION:Erinnerung
+> TRIGGER:PT9H
+> UID:CBE19EA0-E4CA-43BC-B03E-8DC3CF3F7F4A
+> X-APPLE-DEFAULT-ALARM:TRUE
+> X-WR-ALARMUID:CBE19EA0-E4CA-43BC-B03E-8DC3CF3F7F4A
+> END:VALARM
+> END:VEVENT
+> END:VCALENDAR
+´´´
+
+
 
 #### today:
 
-nur weils geht gibts den gleichen Knoten auch noch mit today. Dieser zeigt nur events von heute an.
+nur weils geht ... gibts den gleichen Knoten auch noch mit today. Dieser zeigt nur events von heute an.
 
 ´´´bash
 $ curl "http://loxberry:1504/flaav/api/v0.1/<calenda name>/events/today/<event name>"
+´´´
+
+*Beispiel:*
+Events, die heute stattfinden. Egal mit welchem Namen (regex = .*)
+´´´bash
+$ curl "http://localhost:5000/flaav/api/v0.1/Family/events/today/.*"
+
+> BEGIN:VCALENDAR
+> VERSION:2.0
+> PRODID:-//PYVOBJECT//NONSGML Version 1//EN
+> BEGIN:VEVENT
+> UID:B888496E-FC4F-4D88-B4B4-79C8AA0328DB
+> DTSTART;VALUE=DATE:20211224
+> DTEND;VALUE=DATE:20220103
+> CREATED:20211225T211840Z
+> DTSTAMP:20211225T211841Z
+> LAST-MODIFIED:20211225T211840Z
+> SEQUENCE:0
+> SUMMARY:Urlaub
+> TRANSP:OPAQUE
+> URL;VALUE=URI:
+> BEGIN:VALARM
+> ACTION:DISPLAY
+> DESCRIPTION:Erinnerung
+> TRIGGER:PT9H
+> UID:CBE19EA0-E4CA-43BC-B03E-8DC3CF3F7F4A
+> X-APPLE-DEFAULT-ALARM:TRUE
+> X-WR-ALARMUID:CBE19EA0-E4CA-43BC-B03E-8DC3CF3F7F4A
+> END:VALARM
+> END:VEVENT
+> END:VCALENDAR
+> 
+> BEGIN:VCALENDAR
+> VERSION:2.0
+> PRODID:-//PYVOBJECT//NONSGML Version 1//EN
+> BEGIN:VEVENT
+> UID:58FD33C8-358C-4FEE-8BC2-CDD82960DE32
+> DTSTART;VALUE=DATE:20211222
+> DTEND;VALUE=DATE:20220103
+> CREATED:20210928T072630Z
+> DTSTAMP:20210928T072631Z
+> LAST-MODIFIED:20210928T072630Z
+> SEQUENCE:0
+> SUMMARY:Kita frei 
+> URL;VALUE=URI:
+> END:VEVENT
+> END:VCALENDAR                 
 ´´´
 
 ### is_today
@@ -230,7 +317,33 @@ $ curl "http://loxberry:1504/flaav/api/v0.1/Family/events/any/Urlaub/is_today"
 > 1
 ´´´
 
+### Eventeigenschaften 
+
+der Wert jeder Eigenschaft/Component/Subcomponent kann auch einzeln ausgegeben werden. Der Knoten beschreibt sich über die verfügbaren Eigenschaften. Leider haben nicht alle Events immer alle Eigenschaften gesetzt. Am Besten sucht man sich die aus der Anzeige des ganzen Events raus
+
+´´´bash
+$ curl "http://loxberry:1504/flaav/api/v0.1/<calenda name>/events/any/<event name>/<component name>"
+´´´
+
+*Beispiel 1:*
+Nächtser starttermin fürs Papier(-müll)
+´´´bash
+$ curl "http://localhost:5000/flaav/api/v0.1/M%C3%BCllabfuhr%20ROW/events/next/Papier/dtstart"
+
+> 20220111
+´´´
+
+*Beispiel 2:*
+Welche Termine (Namen) stehen heute an?
+´´´bash
+$ curl "http://localhost:5000/flaav/api/v0.1/Family/events/today/.*/summary"
+
+> Urlaub
+> Kita frei
+´´´
+
 
 ## known issues
 
+* Es können nur Ganztägige Ereignisse betrachtet werden
 * is_today berücksichtigt auch ganztägige Termine, deren enddatum = Heute 00:00. Das ist leider immer so bei ganztägigen Terminen
