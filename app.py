@@ -7,6 +7,11 @@ import caldav, re, os
 app = Flask(__name__)
 
 
+@app.route('/healthz', methods=['GET'])
+def healthz():
+    return {'status': 'ok'}
+
+
 def get_caldat(calender_name):
     # get a specific calendar and male a date search
     dt_start = datetime.today()
@@ -200,4 +205,4 @@ if __name__ == '__main__':
     client = caldav.DAVClient(url=caldav_url, username=caldav_username, password=caldav_passwd)
     my_principal = client.principal()
 
-    app.run(debug=True,  host='0.0.0.0')
+    app.run(debug=False, host='0.0.0.0')
